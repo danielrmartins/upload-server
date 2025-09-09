@@ -1,4 +1,7 @@
 import { env } from '@/env'
+import { getUploadsRoute } from '@/infra/http/routes/get-uploads'
+import { uploadImageRoute } from '@/infra/http/routes/upload-image'
+import { transformSwaggerSchema } from '@/infra/http/transform-swagger-schema'
 import { fastifyCors } from '@fastify/cors'
 import fastifyMultipart from '@fastify/multipart'
 import fastifySwagger from '@fastify/swagger'
@@ -9,8 +12,6 @@ import {
   serializerCompiler,
   validatorCompiler,
 } from 'fastify-type-provider-zod'
-import { uploadImageRoute } from './routes/upload-image'
-import { transformSwaggerSchema } from './transform-swagger-schema'
 
 const server = fastify()
 
@@ -52,6 +53,7 @@ server.register(fastifySwaggerUi, {
 })
 
 server.register(uploadImageRoute)
+server.register(getUploadsRoute)
 
 console.log(env.DATABASE_URL)
 
